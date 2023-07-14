@@ -1,8 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import css from './Filter.module.css';
 
-function Filter({ value, onFilter }) {
+import { useSelector, useDispatch } from 'react-redux';
+import { getFilter } from 'redux/selectors';
+import { filterChange } from 'redux/filterSlice';
+
+function Filter() {
+  const value = useSelector(getFilter);
+  const dispatch = useDispatch();
+  const onFilter = e => {
+    dispatch(filterChange(e.target.value));
+  };
   return (
     <div className={css.container}>
       <p className={css.call}>Find contacts by name</p>
@@ -15,10 +23,5 @@ function Filter({ value, onFilter }) {
     </div>
   );
 }
-
-Filter.propTypes = {
-  value: PropTypes.string.isRequired,
-  onFilter: PropTypes.func.isRequired,
-};
 
 export default Filter;
