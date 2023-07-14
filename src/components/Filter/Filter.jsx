@@ -8,8 +8,10 @@ import { filterChange } from 'redux/filterSlice';
 function Filter() {
   const value = useSelector(getFilter);
   const dispatch = useDispatch();
-  const onFilter = e => {
-    dispatch(filterChange(e.target.value));
+  const onFilterChange = e => {
+    const newFilter = e.target.value;
+
+    dispatch(filterChange(newFilter));
   };
   return (
     <div className={css.container}>
@@ -18,7 +20,7 @@ function Filter() {
         className={css.input}
         type="text"
         value={value}
-        onChange={onFilter}
+        onChange={onFilterChange}
       />
     </div>
   );
