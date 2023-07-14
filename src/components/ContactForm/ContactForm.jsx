@@ -1,60 +1,36 @@
-import { useState } from 'react';
-// import { nanoid } from 'nanoid';
+import React, { useState } from 'react';
+import { nanoid } from 'nanoid';
 import css from './ContactForm.module.css';
-
-import { useSelector, useDispatch } from 'react-redux';
-import { getShowedContacts } from 'redux/selectors';
+import { useDispatch } from 'react-redux';
 import { addContact } from 'redux/contactSlice';
 
-// const INITIAL_STATE = {
-//   name: '',
-//   number: '',
-// };
+const INITIAL_STATE = {
+  name: '',
+  number: '',
+};
 
 const ContactForm = () => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-
-  const contacts = useSelector(getShowedContacts);
+  const [formValues, setFormValues] = useState(INITIAL_STATE);
   const dispatch = useDispatch();
-
-  const handleSubmit = e => {
-    e.preventDefault();
-
-    const isInContacts = contacts.some(
-      contact => contact.name.toLowerCase() === name.toLowerCase()
-    );
-    if (isInContacts) {
-      alert(`${name} is already in contacts`);
-      return;
-    }
-    dispatch(addContact({ name, number }));
-    setName('');
-    setNumber('');
-    console.log('submit', name);
-
-    // onSubmit({ id: nanoid(), ...formValues });
-    // reset();
-  };
 
   const handleChange = e => {
     const { name, value } = e.target;
-    switch (name) {
-      case 'name':
-        setName(value);
-        break;
-      case 'number':
-        setNumber(value);
-        break;
-      default:
-        return;
-    }
+    setFormValues(prevValues => ({ ...prevValues, [name]: value }));
   };
-  // const reset = () => {
-  //   setFormValues(INITIAL_STATE);
-  // };
 
-  // const { name, number } = formValues;
+  const handleSubmit = e => {
+    e.preventDefault();
+    const newContact = { id: nanoid(), ...formValues };
+    dispatch(addContact(newContact));
+    reset();
+  };
+
+  const reset = () => {
+    setFormValues(INITIAL_STATE);
+  };
+
+  const { name, number } = formValues;
+
   return (
     <form className={css.form} onSubmit={handleSubmit}>
       <label className={css.label}>
@@ -86,9 +62,10 @@ const ContactForm = () => {
       </label>
 
       <button className={css.button} type="submit">
-        Add contact{' '}
+        Add contact
       </button>
     </form>
   );
 };
+
 export default ContactForm;
