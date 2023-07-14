@@ -1,7 +1,9 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit';
 
 const memoContacts = localStorage.getItem('contacts');
-const parsedContacts = JSON.parse(memoContacts);
+const parsedContacts = JSON.parse(memoContacts) || [];
+const initialState = parsedContacts;
+
 // const phoneContacts = {
 //   contacts: [
 //     { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
@@ -12,12 +14,12 @@ const parsedContacts = JSON.parse(memoContacts);
 // };
 export const contactSlice = createSlice({
   name: 'contacts',
-  initialState: parsedContacts,
+  initialState,
   reducers: {
     addContact: {
       reducer(state, action) {
         state.contacts.push(action.payload);
-        localStorage.setItem('contacts', JSON.stringify(state));
+        localStorage.setItem('contacts', JSON.stringify(state.contacts));
       },
     },
     prepare(newContact) {
@@ -32,7 +34,7 @@ export const contactSlice = createSlice({
       if (index !== -1) {
         state.contacts.splice(index, 1);
       }
-      localStorage.setItem('contacts', JSON.stringify(state));
+      localStorage.setItem('contacts', JSON.stringify(state.contacts));
     },
   },
 });
