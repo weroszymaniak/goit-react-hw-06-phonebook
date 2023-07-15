@@ -9,7 +9,7 @@ function Filter() {
   const value = useSelector(getFilter);
   const dispatch = useDispatch();
   const onFilterChange = e => {
-    const newFilter = e.target.value.toLowerCase;
+    const newFilter = e.target.value.toLowerCase();
     console.log('thats filter', e.target.value);
     dispatch(filterChange(newFilter));
   };
