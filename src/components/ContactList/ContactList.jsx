@@ -2,9 +2,10 @@ import React from 'react';
 import css from './ContactList.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeContact } from 'redux/contactSlice';
+import { getShowedContacts } from 'redux/selectors';
 
 const ContactList = () => {
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(getShowedContacts);
   const dispatch = useDispatch();
   const handleRemove = id => {
     dispatch(removeContact(id));
