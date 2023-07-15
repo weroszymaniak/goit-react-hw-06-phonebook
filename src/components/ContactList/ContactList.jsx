@@ -1,7 +1,7 @@
 import React from 'react';
 import css from './ContactList.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeContact, updateLocalStorage } from 'redux/contactSlice';
+import { removeContact } from 'redux/contactSlice';
 
 const ContactList = () => {
   const contacts = useSelector(state => state.contacts);

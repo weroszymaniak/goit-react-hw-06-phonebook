@@ -1,4 +1,4 @@
-import { createSlice, nanoid } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 const savedContacts = localStorage.getItem('contacts');
 const parsedContacts = JSON.parse(savedContacts) || [];
 
@@ -7,27 +7,17 @@ const contactSlice = createSlice({
   name: 'contacts',
   initialState,
   reducers: {
-    addContact: {
-      reducer(state, action) {
-        state.push(action.payload);
-      },
+    addContact: (state, action) => {
+      state.push(action.payload);
+      localStorage.setItem('contacts', JSON.stringify(state));
     },
-    prepare(newContact) {
-      return {
-        payload: { id: nanoid(), ...newContact },
-      };
-    },
-    removeContact: {
-      reducer(state, action) {
-        return state.filter(contact => contact.id !== action.payload);
-      },
-    },
+  },
+  removeContact: (state, action) => {
+    const index = state.findIndex(contact => contact.id === action.payload);
+    state.splice(index, 1);
+    localStorage.setItem('contacts', JSON.stringify(state));
   },
 });
 
 export const { addContact, removeContact } = contactSlice.actions;
 export const contactsReducer = contactSlice.reducer;
-
-export const updateLocalStorage = state => {
-  localStorage.setItem('contacts', JSON.stringify(state));
-};
