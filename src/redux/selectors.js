@@ -2,12 +2,10 @@
 
 export const getContacts = state => state.contacts;
 export const getFilter = state => state.filter;
-export const getShowedContacts = state => {
-  const contacts = getContacts(state);
-  const filter = getFilter(state);
-  const unitedContact = filter.toLowerCase();
+// export const getShowedContacts = state => {
+//   const contacts = state.contacts;
+//   const filter = state.filter;
+//   const unitedContact = filter;
 
-  return contacts.filter(
-    contact => contact && contact.name && contact.name.includes(unitedContact)
-  );
-};
+//   return contacts.filter(contact => contact.name.includes(unitedContact));
+// };
