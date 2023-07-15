@@ -22,6 +22,7 @@ const ContactForm = () => {
     e.preventDefault();
     const newContact = { id: nanoid(), ...formValues };
     dispatch(addContact(newContact));
+
     reset();
   };
 

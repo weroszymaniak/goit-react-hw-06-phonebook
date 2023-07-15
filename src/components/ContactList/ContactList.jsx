@@ -1,12 +1,14 @@
 import React from 'react';
 import css from './ContactList.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeContact } from 'redux/contactSlice';
+import { removeContact, updateLocalStorage } from 'redux/contactSlice';
 
 const ContactList = () => {
-  const contacts = useSelector(state => state.contacts.contacts);
+  const contacts = useSelector(state => state.contacts);
   const dispatch = useDispatch();
-  const handleRemove = id => dispatch(removeContact(id));
+  const handleRemove = id => {
+    dispatch(removeContact(id));
+  };
 
   console.log('making contacts list', contacts);
   return (
