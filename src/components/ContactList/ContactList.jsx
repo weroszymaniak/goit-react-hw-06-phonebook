@@ -1,36 +1,21 @@
 import React from 'react';
 import css from './ContactList.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeNameContact, removeNumberContact } from 'redux/contactSlice';
-import { getNames, getNumbers, getFilter } from 'redux/selectors';
-// import { addNameContact, addNumberContact } from 'redux/contactSlice';
+import { removeContact } from 'redux/contactSlice';
+import { getContacts, getFilter } from 'redux/selectors';
 
 const ContactList = () => {
-  const names = useSelector(getNames);
-  const numbers = useSelector(getNumbers);
+  const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
-
-  const mergedContacts = names.map((name, index) => ({
-    id: index,
-    name,
-    number: numbers[index],
-  }));
-
-  const filteredContacts = mergedContacts.filter(contact =>
+  const filteredContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
-
   const dispatch = useDispatch();
   const handleRemove = id => {
-    const contactToRemove = mergedContacts.find(contact => contact.id === id);
-    if (contactToRemove) {
-      dispatch(removeNameContact(contactToRemove.name));
-      dispatch(removeNumberContact(contactToRemove.number));
-    }
+    dispatch(removeContact(id));
   };
 
-  console.log('making contacts list', mergedContacts);
-
+  console.log('making contacts list', contacts);
   return (
     <ul className={css.list}>
       {filteredContacts.map(contact => (

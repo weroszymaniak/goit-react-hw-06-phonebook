@@ -8,4 +8,3 @@ export const store = configureStore({
     filter: filterReducer,
   },
 });
-console.log('store state:', store.getState());
